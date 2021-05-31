@@ -9,6 +9,8 @@ public class UnitBaseSO : ScriptableObject, IDisplayableInfo
     public Sprite GameSprite;
     public Sprite UISprite;
 
+    public GameObject UnitPrefab;
+    public int CountToPool;
 
     public InfoStruct GetDisplayInfo() {
         var data = new InfoStruct {
@@ -19,4 +21,6 @@ public class UnitBaseSO : ScriptableObject, IDisplayableInfo
 
         return data;
     }
+
+    
 }

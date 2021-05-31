@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BuildingBase : MonoBehaviour, IPointerDownHandler
-{
+public class BuildingBase : MonoBehaviour, IPointerDownHandler, IPoolable {
     [SerializeField] private BuildingBaseSO SO;
     [SerializeField] private SpriteRenderer Renderer;
     [SerializeField] private GridPlacer Placer;
@@ -33,16 +32,17 @@ public class BuildingBase : MonoBehaviour, IPointerDownHandler
         if (Placer.isGhost) {
             if(eventData.button == PointerEventData.InputButton.Right) {
                 CancelPlacement();
+            } else {
+            PlaceBuilding();
             }
 
-            PlaceBuilding();
         } else {   
             DisplayInfoEvent?.Raise(SO.GetDisplayInfo());
         }
     }
 
     private void CancelPlacement() {
-        Destroy(this.gameObject);
+        ObjectPoolManager.instance.ReturnToPool(this.gameObject,this);
     }
 
     private void SetGhost() {
@@ -54,12 +54,27 @@ public class BuildingBase : MonoBehaviour, IPointerDownHandler
 
 
     }
+    public bool isGhost() {
+        return Placer.isGhost;
+    }
 
     private void PlaceBuilding() {
         if (Placer.TryPlace()) {
             Renderer.material.color = BaseMaterialColor;
             Placer.isGhost = false;
         }    
+    }
+
+    public GameObject GetPoolPrefab() {
+        return SO.BuildingPrefab;
+    }
+
+    public int PoolCount() {
+        return SO.CountToPool;
+    }
+
+    public string PoolName() {
+        return SO.BuildingName;
     }
 
 

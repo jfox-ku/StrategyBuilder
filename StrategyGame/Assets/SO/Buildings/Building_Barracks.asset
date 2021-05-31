@@ -20,3 +20,6 @@ MonoBehaviour:
     type: 3}
   ProducableUnits:
   - {fileID: 11400000, guid: bbfc8d262280fd442ad2ee6dc01f436a, type: 2}
+  BuildingPrefab: {fileID: 4156801984972890993, guid: f82e03e03432e3a49ba9f48671be0907,
+    type: 3}
+  CountToPool: 10

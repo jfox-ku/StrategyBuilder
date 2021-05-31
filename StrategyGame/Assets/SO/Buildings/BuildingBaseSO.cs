@@ -12,6 +12,8 @@ public class BuildingBaseSO : ScriptableObject, IDisplayableInfo {
     public Sprite UISprite;
 
     public List<UnitBaseSO> ProducableUnits;
+    public GameObject BuildingPrefab;
+    public int CountToPool;
 
     public InfoStruct GetDisplayInfo() {
         var data = new InfoStruct {
@@ -24,8 +26,19 @@ public class BuildingBaseSO : ScriptableObject, IDisplayableInfo {
 
         return data;
     }
+    public int PoolCount() {
+        return CountToPool;
+    }
 
 
+    public GameObject GetPoolPrefab() {
+        return BuildingPrefab;
+    }
+
+    public string PoolName() {
+        return BuildingName;
+    }
+    
 }
 
 

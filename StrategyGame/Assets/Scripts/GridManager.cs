@@ -75,7 +75,7 @@ public class GridManager : MonoBehaviour
     public void SetGridRegionOccupied(GridTile startTile, Vector2 size) {
         for (int i = 0; i < size.x; i++) {
             for (int j = 0; j < size.y; j++) {
-                AllTiles[(int)startTile.CellPos().x, (int)startTile.CellPos().y].isOccupied = true;
+                AllTiles[(int)startTile.CellPos().x+i, (int)startTile.CellPos().y+j].isOccupied = true;
             }
 
         }

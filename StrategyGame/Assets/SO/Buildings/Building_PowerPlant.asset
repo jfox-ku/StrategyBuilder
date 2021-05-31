@@ -19,3 +19,6 @@ MonoBehaviour:
   UISprite: {fileID: 7747200402030405100, guid: 2b9c78f2e0b6b184baf16a3d6375af97,
     type: 3}
   ProducableUnits: []
+  BuildingPrefab: {fileID: 4156801984972890993, guid: e269c33b5f1b55048a57e2ecdfafbb33,
+    type: 3}
+  CountToPool: 10
