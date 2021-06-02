@@ -5,6 +5,7 @@ using UnityEngine;
 public class BasicCameraMovement : MonoBehaviour
 {
     Camera cam;
+    public float cameraSpeed = 0.4f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,7 @@ public class BasicCameraMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
         if(x!=0 || y != 0) {
-            this.transform.position += new Vector3(x, y, 0);
+            this.transform.position += new Vector3(x*cameraSpeed, y*cameraSpeed, 0);
             this.transform.position = new Vector3(
             Mathf.Clamp(this.transform.position.x, -10, 10),
             Mathf.Clamp(this.transform.position.y, -10, 10),

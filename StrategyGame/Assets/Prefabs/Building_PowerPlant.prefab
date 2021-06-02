@@ -101,6 +101,7 @@ MonoBehaviour:
   Renderer: {fileID: 5783474457361043250}
   Placer: {fileID: 5277426588618299742}
   DisplayInfoEvent: {fileID: 11400000, guid: 06b378cce0e6a074e94f621fa00ac9f2, type: 2}
+  SelectedEvent: {fileID: 11400000, guid: 5b42457212a927744992108427f70e0a, type: 2}
   TestingSO: {fileID: 11400000, guid: 8552fac18922ab242b21845b6626d65a, type: 2}
 --- !u!114 &5277426588618299742
 MonoBehaviour:
@@ -129,7 +130,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2, y: 2}
+  m_Offset: {x: 1.4869261, y: 0.97385216}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -140,5 +141,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4, y: 4}
+  m_Size: {x: 2.9738522, y: 1.9477043}
   m_EdgeRadius: 0

@@ -24,31 +24,22 @@ public class ObjectPoolManager : MonoSingleton<ObjectPoolManager>
             temp.gameObject.name += "_blueprint";
 
             var item = temp.GetComponent<IPoolable>();
-            Debug.Log(item.PoolName());
-
             StackPoolDict.Add(item.PoolName(),new Stack<GameObject>());
             TempDict.Add(item.PoolName(),item);
 
             Populate(item);
-            
         }
     }
-
-
-
 
     private void Populate(IPoolable poolable) {
         var prefab = poolable.GetPoolPrefab();
         var pool = StackPoolDict[poolable.PoolName()];
         if(pool == null) StackPoolDict.Add(poolable.PoolName(), new Stack<GameObject>());
 
-
         for (int i = 0; i < poolable.PoolCount(); i++) {
             var t = Instantiate(prefab,this.transform);
             t.SetActive(false);
             pool.Push(t);
-
-
         }
     }
 

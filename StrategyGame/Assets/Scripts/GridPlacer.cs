@@ -5,7 +5,7 @@ using UnityEngine;
 public class GridPlacer : MonoBehaviour
 {
     public bool isGhost;
-    private GridManager GM;
+    public GridManager GM;
     private DefaultInputManager DIM;
 
     private int startX;

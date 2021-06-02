@@ -13,6 +13,8 @@ public class InfoMenu : MonoBehaviour
     public void DisplayInfo(InfoStruct inf) {
         Name.text = inf.Name;
         DisplayImage.sprite = inf.UISprite;
+        //DisplayImage.SetNativeSize();
+        
         if (!inf.HasUnits()) {
             ProductionSubmenu.gameObject.SetActive(false);
         } else {

@@ -17,3 +17,6 @@ MonoBehaviour:
     type: 3}
   UISprite: {fileID: -236142487539694930, guid: 2b9c78f2e0b6b184baf16a3d6375af97,
     type: 3}
+  UnitPrefab: {fileID: 5013236183057306139, guid: 1e928fba52e57d3499354faba3f26799,
+    type: 3}
+  CountToPool: 15

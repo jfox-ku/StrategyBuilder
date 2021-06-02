@@ -8,6 +8,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] int maxY = 1;
 
     [SerializeField] GameObject GridBackgroundPrefab;
+    [SerializeField] private Pathfinder Pather;
     private Camera cam;
 
     private GridTile[,] AllTiles;
@@ -30,8 +31,6 @@ public class GridManager : MonoBehaviour
         gridSpriteObj.GetComponent<SpriteRenderer>().size = new Vector2(maxX,maxY);
 
     }
-
-   
 
     public GridTile ScreenPointToGridTile(Vector2 pos) {
         var point = cam.ScreenToWorldPoint(new Vector3(pos.x, pos.y, cam.nearClipPlane));
@@ -84,12 +83,37 @@ public class GridManager : MonoBehaviour
     public Vector2 GetTileTransformPosition(GridTile tile) {
         return tile.CellPos() + (Vector2)this.transform.position;
     }
+
+    public List<GridTile> GetNeigh(GridTile center) {
+        List<GridTile> neighs = new List<GridTile>();
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) continue;
+
+                Vector2 checkPos = center.CellPos() + new Vector2(i,j);
+                if (InBounds(checkPos)) {
+                    neighs.Add(AllTiles[(int)checkPos.x, (int)checkPos.y]);
+                }
+            }
+        }
+
+        return neighs;
+    }
+
+    public List<GridTile> GetPath(GridTile start, GridTile end) {
+        return Pather.FindPath(start,end);
+    }
+
 }
 
 public class GridTile {
-    readonly int gx;
-    readonly int gy;
+    public readonly int gx;
+    public readonly int gy;
     public bool isOccupied { get; set; }
+
+    public GridTile cameFrom;
+    public int gCost;
+    public int hCost;
 
     public GridTile(int x, int y) {
         gx = x;
@@ -100,4 +124,11 @@ public class GridTile {
     public Vector2 CellPos() {
         return new Vector2(gx, gy);
     }
+
+    public int fCost {
+        get { return gCost + hCost;}
+    }
+
+    
+
 }
