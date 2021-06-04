@@ -21,7 +21,7 @@ public class BasicCameraMovement : MonoBehaviour
         if(x!=0 || y != 0) {
             this.transform.position += new Vector3(x*cameraSpeed, y*cameraSpeed, 0);
             this.transform.position = new Vector3(
-            Mathf.Clamp(this.transform.position.x, -10, 10),
+            Mathf.Clamp(this.transform.position.x, -10, 11),
             Mathf.Clamp(this.transform.position.y, -10, 10),
             this.transform.position.z);
 

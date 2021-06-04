@@ -9,6 +9,7 @@ public class UnitBase : MonoBehaviour, IPointerDownHandler, IPoolable
     [SerializeField] private SpriteRenderer Renderer;
     [SerializeField] private GridMover Mover;
 
+    [SerializeField] private InfoEvent DisplayInfoEvent;
     [SerializeField] private GameObjEvent SelectedEvent;
 
     private Color BaseMaterialColor;
@@ -18,9 +19,10 @@ public class UnitBase : MonoBehaviour, IPointerDownHandler, IPoolable
         Initialize(TestingSO);
     }
 
-    public void InitializeAt(GridTile Tile) {
-        if (Tile.isOccupied) return;
+    public bool InitializeAt(GridTile Tile) {
+        if (Tile.isOccupied) return false;
         Mover.MoverInitialize(Tile);
+        return true;
 
     }
 
@@ -40,7 +42,11 @@ public class UnitBase : MonoBehaviour, IPointerDownHandler, IPoolable
     }
 
     public void OnPointerDown(PointerEventData eventData) {
-        SelectedEvent?.Raise(this.gameObject);
+        if (eventData.button == PointerEventData.InputButton.Left) {
+            DisplayInfoEvent?.Raise(SO.GetDisplayInfo());
+            SelectedEvent?.Raise(this.gameObject);
+        }
+           
     }
 
     public int PoolCount() {

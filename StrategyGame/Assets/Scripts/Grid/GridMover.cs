@@ -28,20 +28,48 @@ public class GridMover : MonoBehaviour
         }
     }
 
+    public float stepTime = 0.4f;
     private IEnumerator MoveByStep(List<GridTile> path) {
+        yield return new WaitForSeconds(0.1f);
+        bool cancelStep = false;
         for (int i = 0; i < path.Count; i++) {
             GridTile dest = path[i];
             //If the grid changes while in movement, recalculate path
             if (dest.isOccupied) {
-                Move(path[path.Count-1]);
-                break;
+                for (int f = path.Count - 1; f >= 0; f--) {
+                    
+                    if (f < i) { //We are as far as we can get along the path
+                        cancelStep = true;
+                        break;
+                    }
+
+                    
+                    if (!path[f].isOccupied) {
+                        Move(path[f]);
+                        cancelStep = true;
+                        break;
+                    }
+                }      
             }
 
-            currentLocation.isOccupied = false;
-            this.transform.position = GridMan.GetTileTransformPosition(dest);
-            currentLocation = dest;
-            currentLocation.isOccupied = true;
-            yield return new WaitForSeconds(0.5f);
+            if (!cancelStep) {
+                float timer = stepTime;
+                Vector2 startPos = this.transform.position;
+                Vector2 stepEndPos = GridMan.GetTileTransformPosition(dest);
+
+                currentLocation.isOccupied = false;
+                currentLocation = dest;
+                currentLocation.isOccupied = true;
+
+                while (timer > 0) {
+                    timer -= Time.deltaTime;
+                    this.transform.position = Vector3.Lerp(startPos, stepEndPos, 1 - timer / stepTime);
+                    yield return new WaitForEndOfFrame();
+                }
+            }
+            
+            
+            //yield return new WaitForSeconds(0.5f);
 
         }
         yield return null;

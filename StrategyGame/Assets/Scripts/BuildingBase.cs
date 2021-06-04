@@ -16,6 +16,7 @@ public class BuildingBase : MonoBehaviour, IPointerDownHandler, IPoolable {
 
 
     [SerializeField] private Transform FlagObject;
+    public GridTile SpawnPoint;
     public GridTile SpawnDestination;
 
 
@@ -41,8 +42,11 @@ public class BuildingBase : MonoBehaviour, IPointerDownHandler, IPoolable {
             PlaceBuilding();
             }
 
-        } else {   
-            DisplayInfoEvent?.Raise(SO.GetDisplayInfo());
+        } else {
+            if (eventData.button == PointerEventData.InputButton.Left) {
+                SelectedEvent?.Raise(this.gameObject);
+                DisplayInfoEvent?.Raise(SO.GetDisplayInfo());
+            }
         }
     }
 
@@ -76,18 +80,45 @@ public class BuildingBase : MonoBehaviour, IPointerDownHandler, IPoolable {
         return Placer.isGhost;
     }
 
-    public void FindViableFlag() {
+
+    public void ProduceUnit(string unitName) {
+        ObjectPoolManager PoolMan = ObjectPoolManager.instance;
+        var unit = PoolMan.GetFromPoolString(unitName).GetComponent<UnitBase>();
+        SpawnPoint = Placer.FindSpawnPoint();
         
+        if (SpawnPoint!=null) {
+            unit.InitializeAt(SpawnPoint);
+
+            GridTile Alternate = null;
+            if (SpawnDestination.isOccupied) {
+                Alternate = Placer.GetViableNeighbour(SpawnDestination);
+                if(Alternate!=null) unit.MoveTo(Alternate);
+            } else {
+                unit.MoveTo(SpawnDestination);
+            }
+        } else {
+            PoolMan.ReturnToPool(unit.gameObject,unit);
+
+            Debug.Log("Spawns point is blocked!");
+        }
+
     }
 
-    public void SetFlag(GridTile flagTile) {
+    public void SetSpawnDestination(GridTile flagTile) {
+        if (SO.ProducableUnits.Count == 0) return;
         FlagObject.position = Placer.GM.GetTileTransformPosition(flagTile);
+        SpawnDestination = flagTile;
     }
 
     private void PlaceBuilding() {
         if (Placer.TryPlace()) {
             Renderer.material.color = BaseMaterialColor;
             Placer.isGhost = false;
+            SpawnPoint = Placer.FindSpawnPoint();
+            SetSpawnDestination(SpawnPoint);
+
+            SelectedEvent?.Raise(this.gameObject);
+            DisplayInfoEvent?.Raise(SO.GetDisplayInfo());
         } else {
             StartCoroutine(FlashInvalid());
         }

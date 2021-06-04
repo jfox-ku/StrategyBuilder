@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InputInterpreter : MonoBehaviour
 { 
-    enum InputContext{Ghost, Unit, Building, Empty }
-
     InputManager InputMan;
 
     GridManager GridMan;
@@ -32,29 +30,24 @@ public class InputInterpreter : MonoBehaviour
 
 
     public void PrimaryInputDown(Vector2 pos) {
-        //Debug.Log(InputMan.IsOverUiElement());
-        //PoolMan.GetFromPoolString("Barracks");
-        //if (CurrentSelection != null) return;
-        var unit = PoolMan.GetFromPoolString("Soldier").GetComponent<UnitBase>();
-        GridTile tile = GridMan.ScreenPointToGridTile(pos);
-        if (!tile.isOccupied) {
-            unit.InitializeAt(tile);
-            CurrentSelection = unit.gameObject;
-        } else {
-            PoolMan.ReturnToPool(unit.gameObject,unit);
-            CurrentSelection = null;
-        }
+        
         
     }
     public void SecondaryInputDown(Vector2 pos) {
+        if (CurrentSelection == null) return;
+
         GridTile g = GridMan.ScreenPointToGridTile(pos);
         UnitBase unit;
         if(unit = CurrentSelection.GetComponent<UnitBase>()) {
             unit.MoveTo(g);
         }
 
-
-        Debug.Log(g.CellPos());
+        BuildingBase build;
+        if(build = CurrentSelection.GetComponent<BuildingBase>()) {
+            if (!g.isOccupied) {
+                build.SetSpawnDestination(g);
+            }
+        }
     }
 
 
@@ -70,14 +63,13 @@ public class InputInterpreter : MonoBehaviour
 
     public void ProduceUnitClicked(string unitPoolName) {
         BuildingBase sel = CurrentSelection.GetComponent<BuildingBase>();
-        UnitBase unit = PoolMan.GetFromPoolString(unitPoolName).GetComponent<UnitBase>();
-        if (sel != null && unit!=null) {
+        if (sel != null) {
             if (sel.CanProduceFromPool(unitPoolName)) {
-
-            } else {
-                PoolMan.ReturnToPool(unit.gameObject,unit);
+                sel.ProduceUnit(unitPoolName);
             }
 
+        } else {
+            Debug.Log("Selection can not produce units.");
         }
 
     }

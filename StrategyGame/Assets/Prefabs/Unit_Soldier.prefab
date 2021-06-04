@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -236142487539694930, guid: 2b9c78f2e0b6b184baf16a3d6375af97,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -100,6 +100,7 @@ MonoBehaviour:
   SO: {fileID: 11400000, guid: bbfc8d262280fd442ad2ee6dc01f436a, type: 2}
   Renderer: {fileID: 5335986183479704761}
   Mover: {fileID: 6769868040735889375}
+  DisplayInfoEvent: {fileID: 11400000, guid: 06b378cce0e6a074e94f621fa00ac9f2, type: 2}
   SelectedEvent: {fileID: 11400000, guid: 5b42457212a927744992108427f70e0a, type: 2}
   TestingSO: {fileID: 11400000, guid: bbfc8d262280fd442ad2ee6dc01f436a, type: 2}
 --- !u!114 &6769868040735889375
@@ -116,6 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GridMan: {fileID: 0}
   isMoving: 0
+  stepTime: 0.4
 --- !u!61 &7033360958295871781
 BoxCollider2D:
   m_ObjectHideFlags: 0

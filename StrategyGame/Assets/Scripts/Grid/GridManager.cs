@@ -46,6 +46,7 @@ public class GridManager : MonoBehaviour
 
     }
 
+    //Returns a valid grid tile even if input is out of range
     private GridTile InBoundGridTile(int ix,int iy) {
         int validX = ix < 0 ? 0 : (ix >= maxX ? maxX-1 : ix);
         int validY = iy < 0 ? 0 : (iy >= maxY ? maxY-1 : iy);
@@ -56,6 +57,13 @@ public class GridManager : MonoBehaviour
     private bool InBounds(Vector2 Pos) {
         if (Pos.x < 0 || Pos.x >= maxX || Pos.y < 0 || Pos.y >= maxY) return false;
         else return true;
+    }
+
+    public GridTile GetTile(int x,int y) {
+        if(InBounds(new Vector2(x, y))) {
+            return AllTiles[x, y];
+        }
+        return null;
     }
 
     public bool CheckGridRegion(GridTile startTile,Vector2 size) {

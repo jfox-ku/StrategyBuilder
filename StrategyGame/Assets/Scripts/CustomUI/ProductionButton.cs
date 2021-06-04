@@ -22,7 +22,7 @@ public class ProductionButton : MonoBehaviour
 
     }
     public void ButtonClicked() {
-        ProduceGhostEvent?.Raise(building.PoolName());
+        ProduceGhostEvent?.Raise(building.BuildingName);
     }
     
 }

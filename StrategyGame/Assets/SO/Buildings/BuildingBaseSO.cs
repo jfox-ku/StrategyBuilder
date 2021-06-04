@@ -26,18 +26,6 @@ public class BuildingBaseSO : ScriptableObject, IDisplayableInfo {
 
         return data;
     }
-    public int PoolCount() {
-        return CountToPool;
-    }
-
-
-    public GameObject GetPoolPrefab() {
-        return BuildingPrefab;
-    }
-
-    public string PoolName() {
-        return BuildingName;
-    }
     
 }
 
